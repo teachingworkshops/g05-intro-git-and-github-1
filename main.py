@@ -1,4 +1,4 @@
-import room
+import room #room module room.py containing Room class
 
 r1 = room.Room("STARTING POINT", "you start in this room.")
 r2 = room.Room("RUGGLES", "ruuggles street")
