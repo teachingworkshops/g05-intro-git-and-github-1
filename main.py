@@ -81,6 +81,7 @@ while input1 != 'QUIT':
         print("You can't go that way!")
         currentRoom = previousRoom
     else:
+        print("You head " + input1.lower())
         if not currentRoom.visited:
             #check attributes / events of the room if not yet visited
             if (currentRoom.hasMoney):
