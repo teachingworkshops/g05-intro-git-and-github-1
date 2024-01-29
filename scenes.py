@@ -139,6 +139,3 @@ __   __                     _       _
         print()  # Print a new line after the text is printed
         
 
-x = Scenes()
-# x.ruggles_scene()
-x.ending_page()

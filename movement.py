@@ -100,4 +100,5 @@ background = [
         "###############               ###############"
     ]
 
+
 play_game(background, (2,2))
