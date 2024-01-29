@@ -1,0 +1,15 @@
+[
+STARTINGPOINT
+DESC:you start in this room.
+N:RUGGLES E:NONE S:NONE W:NONE
+]
+
+[
+RUGGLES
+DESC:welcome to ruggles station
+N:NONE E:NONE S:STARTINGPOINT W:NONE
+
+HASMONEY:2.69
+]
+
+ENDDATA
