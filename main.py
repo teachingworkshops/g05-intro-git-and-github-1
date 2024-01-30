@@ -1,86 +1,70 @@
-import room #room module room.py containing Room class
+import room_manager as rm #room module room.py containing Room class
 from colorama import Fore, Style #library containing colored
 
-roomList = []
+def printTitle():
+    #image to braille source - https://505e06b2.github.io/Image-to-Braille/
+    print(Fore.CYAN + Style.BRIGHT + "     MBTA SIMULATOR 2K24\n")
+    print(('⠄⠄⠄⠄⠄⠄⠄⠄⣀⣤⣤⠶⠖⠛⠛⠛⠛⠲⠶⣤⣤⣀⠄⠄⠄⠄⠄⠄⠄⠄\n⠄⠄⠄⠄⠄⣠⣤⠟⠛⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠛⠻⣦⣄⠄⠄⠄⠄⠄\n⠄⠄⠄⣠⣴⠛⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠛⣦⣄⠄⠄⠄\n⠄⠄⣤⠟⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠛⣦⠄⠄\n⠄⣼⡟⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠻⣧⠄\n⢠⡟⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⢹⡄\n⣼⠁⠄⠄⠄⠉⠉⠉⠉⠉⠉⠉⢹⣿⣿⣿⣿⡏⠉⠉⠉⠉⠉⠉⠉⠄⠄⠄⠈⣷\n⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿\n⢻⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡿\n⠘⣧⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣸⠃\n⠄⢻⣦⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⣴⡿⠄\n⠄⠄⠻⣦⡀⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⢀⣤⠟⠁⠄\n⠄⠄⠄⠙⠻⣄⡀⠄⠄⠄⠄⠄⠈⠉⠉⠉⠉⠁⠄⠄⠄⠄⠄⠄⣠⡾⠛⠄⠄⠄\n⠄⠄⠄⠄⠄⠙⠻⣤⣤⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣤⠟⠛⠄⠄⠄⠄⠄\n⠄⠄⠄⠄⠄⠄⠄⠈⠙⠛⠳⠦⣤⣤⣤⣤⣤⣤⠶⠞⠛⠋⠁⠄⠄⠄⠄⠄⠄⠄').replace('⠄',' '))
+    print(Fore.RESET + Style.RESET_ALL + "\n")
 
-#return a room obj, given its title
-roomDict = {}
+#was player able to move?
+moved = False
 
-dataFile = open('data.txt','r') #read mode
-line = next(dataFile).strip() #datafile is an iter
-#initialize rooms
-while line != 'ENDDATA':
-    if line == '[': #Detected a new room to be created
-        title = next(dataFile).strip() #important to strip those new lines
-        desc = next(dataFile).strip()[5:] #remove DESC: part
+printTitle()
 
-        compass =  next(dataFile).strip()
-        directions = compass.split() #split spaces
-
-        newRoom = room.Room(title,desc) #construct a new obj
-        newRoom.setNorth(directions[0][2:]) # [2:] removes first two characters, the N: E: S: W: parts
-        newRoom.setEast(directions[1][2:])
-        newRoom.setSouth(directions[2][2:])
-        newRoom.setWest(directions[3][2:])
-        
-        line = next(dataFile).strip()
-        #start reading attributes of a room
-        while line != ']': #while not at the end of room definition
-            splitLine = line.split(':')
-            #splitLine[0] is the attribute keyword
-            if splitLine[0] == 'HASMONEY':
-                #print("THIS ROOM IS LOADED")
-                newRoom.moneyAmount = splitLine[1]
-                newRoom.hasMoney = True
-            line = next(dataFile).strip() #continue moving down data file
-
-        #done constructing the room
-        roomList.append(newRoom)
-        roomDict[title.upper()] = newRoom
-    line = next(dataFile).strip()
-        
-dataFile.close()
-
-#update room pointers, converting from string to room obj
-for r in roomList:
-    if r.north != 'NONE':
-        r.setNorth(roomDict[r.north])
-    if r.east != 'NONE':
-        r.setEast(roomDict[r.east])
-    if r.south != 'NONE':
-        r.setSouth(roomDict[r.south])
-    if r.west != 'NONE':
-        r.setWest(roomDict[r.west])
-
-currentRoom = roomDict['STARTINGPOINT']
+currentRoom = rm.getRoomByName('STARTINGPOINT')
 currentRoom.visited = True
 
-print(Fore.GREEN + Style.BRIGHT + currentRoom.title + ": \n" + Fore.WHITE + Style.RESET_ALL + currentRoom.description + "\n")
+print(Fore.GREEN + Style.BRIGHT + currentRoom.title + ": \n" + Fore.WHITE + Style.RESET_ALL + currentRoom.description.replace('\\n','\n') + "\n") #replace the implicit \n's in txt with actual line breaks
 
-print(Fore.YELLOW + Style.BRIGHT + "North: {0}, East: {1}, South: {2}, West: {3}".format(currentRoom.north,currentRoom.east,currentRoom.south,currentRoom.west))
+print(Fore.YELLOW + Style.BRIGHT + "North: {0}, East: {1}, South: {2}, West: {3}".format(str(currentRoom.north) + (' (blocked)' if currentRoom.northBlocked else ''),str(currentRoom.east) + (' (blocked)' if currentRoom.eastBlocked else ''),str(currentRoom.south) + (' (blocked)' if currentRoom.southBlocked else ''),str(currentRoom.west) + (' (blocked)' if currentRoom.westBlocked else '')))
 
 input1 = input(Fore.RESET + Style.RESET_ALL + '>').upper()
 
 while input1 != 'QUIT':
     print(Fore.YELLOW + "=======================================================================" + Fore.RESET)
     previousRoom = currentRoom
+    moved = False
     match input1:
         case 'NORTH':
-            currentRoom = currentRoom.north
+            if (currentRoom.northBlocked):
+               currentRoom == 'BLOCKED' #currentRoom will act as an error code string
+            else:
+                currentRoom = currentRoom.north
+                moved = True
         case 'EAST':
-            currentRoom = currentRoom.east
+            if (currentRoom.eastBlocked):
+                currentRoom == 'BLOCKED'
+            else:
+                currentRoom = currentRoom.east
+                moved = True
         case 'SOUTH':
-            currentRoom = currentRoom.south
+            if (currentRoom.southBlocked):
+                currentRoom == 'BLOCKED'
+            else:
+                currentRoom = currentRoom.south
+                moved = True
         case 'WEST':
-            currentRoom = currentRoom.west
-        case 'QUIT':
-            print ("goodbye.")
+            if (currentRoom.westBlocked):
+                currentRoom == 'BLOCKED'
+            else:
+                currentRoom = currentRoom.west
+                moved = True
         case _: 
-            print("Unable to read command")
+            currentRoom = 'UNKNOWN' #currentRoom will act as an error code string
     if currentRoom == 'NONE':
         print("You can't go that way!")
         currentRoom = previousRoom
-    else:
+        moved = False
+    elif currentRoom == 'UNKNOWN':
+        print("Unable to read command")
+        currentRoom = previousRoom
+        moved = False
+    elif currentRoom =='BLOCKED':
+         print("That way is blocked!")
+         currentRoom = previousRoom
+         moved = False
+    if moved:
         print("You head " + input1.lower())
         if not currentRoom.visited:
             #check attributes / events of the room if not yet visited
@@ -88,11 +72,13 @@ while input1 != 'QUIT':
                 print("You found $" + currentRoom.moneyAmount + " on the floor!")
                 #still need to implement player class
             currentRoom.visited = True
+    
+    print(Fore.GREEN + Style.BRIGHT + currentRoom.title + ": \n" + Fore.WHITE + Style.RESET_ALL + currentRoom.description.replace('\\n','\n') + "\n") #replace the implicit \n's in txt with actual line breaks
 
-    print(Fore.GREEN + Style.BRIGHT + "\n" + currentRoom.title + ": \n" + Fore.WHITE + Style.RESET_ALL + currentRoom.description + "\n")
-
-    print(Fore.YELLOW + Style.BRIGHT + "North: {0}, East: {1}, South: {2}, West: {3}".format(currentRoom.north,currentRoom.east,currentRoom.south,currentRoom.west))
+    print(Fore.YELLOW + Style.BRIGHT + "North: {0}, East: {1}, South: {2}, West: {3}".format(str(currentRoom.north) + (' (blocked)' if currentRoom.northBlocked else ''),str(currentRoom.east) + (' (blocked)' if currentRoom.eastBlocked else ''),str(currentRoom.south) + (' (blocked)' if currentRoom.southBlocked else ''),str(currentRoom.west) + (' (blocked)' if currentRoom.westBlocked else '')))
     
     input1 = input(Fore.RESET + Style.RESET_ALL + '>').upper()
             
+#after quit
+print ("goodbye.")
 

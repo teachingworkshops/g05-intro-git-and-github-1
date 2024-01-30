@@ -1,12 +1,13 @@
 [
 STARTINGPOINT
-DESC:you start in this room.
+DESC:you start\nin this\nroom.
 N:RUGGLES E:NONE S:NONE W:NONE
+
 ]
 
 [
 RUGGLES
-DESC:welcome to ruggles station
+DESC:welcome to ruggles station\nyou see a giant painted mural.
 N:NONE E:NONE S:STARTINGPOINT W:NONE
 
 HASMONEY:2.69
