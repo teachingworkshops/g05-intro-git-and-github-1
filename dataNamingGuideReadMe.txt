@@ -13,6 +13,9 @@ N:NAME E:NAME S:NAME W:NAME #Replace NAME with the name of the adjaecent locatio
 
 ENDDATA
 
+
 #LIST OF POSSIBLE ROOM ATTRIBUTES
+
 HASMONEY:[FLOAT AMOUNT] - this room has money lying around. when this room is visited for the first time, it will give an amount of money
 HASITEM:[ITEM ID] - this room has a pickable item. when vistied for the first time, it will add the item to the player's inventory
+BLOCKED:[NORTH/EAST/SOUTH/WEST] - blocks another room
