@@ -1,0 +1,1 @@
+#implement player obj - attributes are health, currency, score, and inventory (which is a list of item objects)
