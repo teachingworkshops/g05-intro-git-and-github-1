@@ -98,7 +98,7 @@ def play_game(position, entry_point) -> tuple[(int, int), bool, str]:
             entry_point = "top"
             break
     #will change this to return if they won or not 
-    if position == (2,4):
+    if position == (4,2):
         return position, True, entry_point
     return position, False, entry_point
     

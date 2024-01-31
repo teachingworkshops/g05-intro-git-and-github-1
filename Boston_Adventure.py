@@ -41,4 +41,7 @@ class Main_Controller:
                 break
             else:
                 pass
+        if conditions[1] == True:
+            scenes.ending_page()
+            input("Press Enter to exit the game...")
 x = Main_Controller()
