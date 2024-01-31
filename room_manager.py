@@ -22,6 +22,10 @@ class Room:
         self.hasItem = False
         self.itemID = "" #type string
 
+        self.unlocksRoom = False
+        self.roomUnlocks = None
+        self.roomUnlocksDesc = ""
+
         #default background
         self.background = [
         "###############               ###############",
@@ -53,6 +57,12 @@ class Room:
         self.west = room
     def getBackground(self):
         return self.background 
+    def unlockAll(self):
+        self.northBlocked = False
+        self.eastBlocked = False
+        self.southBlocked = False
+        self.westBlocked = False
+
 #end Room class    
 def getRoomByName (id):
     return roomDict[id]
@@ -118,6 +128,10 @@ while line != 'ENDDATA':
                         newRoom.southBlocked = True
                     case 'WEST':
                         newRoom.westBlocked = True
+            if splitLine[0] == 'UNLOCKSROOM':
+                newRoom.unlocksRoom = True
+                newRoom.roomUnlocks = splitLine[1]
+                newRoom.roomUnlocksDesc = splitLine[2]
             line = next(dataFile).strip() #continue moving down data file until reached end of room def
 
         #done constructing the room, add it to the list

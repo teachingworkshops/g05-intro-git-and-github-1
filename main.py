@@ -1,32 +1,26 @@
 import room_manager as rm #room module room.py containing Room class
 import player_manager as pm
 import os
-import sys
+import sys,time
 import msvcrt
 from scenes import Scenes
 from maps.map_structure import Map
 from colorama import Fore, Style #library containing colored
 
+def getch():
+    return msvcrt.getch()
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-
-#print(__name__) #name returns what this file is being run is - this should return __main__
 def main():
-    def getch():
-        return msvcrt.getch()
-
-    def clear_screen():
-        os.system('cls' if os.name == 'nt' else 'clear')
-
     #reload scene after
     def draw_game(x,y):
         clear_screen()
 
-        #print(x)
-        #print(y)
-        print(messageLog)
-
         print(playerStatsMessage)
+
+        print(messageLog)
 
         print(Fore.GREEN + Style.BRIGHT + currentRoom.title + ": \n" + Fore.WHITE + Style.RESET_ALL + currentRoom.description.replace('\\n','\n') + "\n") #replace the implicit \n's in txt with actual line breaks
 
@@ -34,8 +28,7 @@ def main():
 
         print(Fore.WHITE)
         
-        for row in background:
-            print(row)
+        print("\r"+("\n").join(background)) #separate each element with \n
 
     def clear_previous_position(tile): #replace previous position with the tile the player was on
         updated_row = list(background[player.y])
@@ -85,14 +78,10 @@ def main():
     player.y = screen_height // 2
     move_player(player.x,player.y,' ')
 
-
-
     inputCmd = ''
     #GAME LOOP
     while inputCmd != 'QUIT':
         background = currentRoom.background
-        tempBackground = background
-        
         screen_width = len(background[0])
         screen_height = len(background)
 
@@ -110,6 +99,9 @@ def main():
             if currentRoom.title == 'HOME':
                 messageLog = "YOU WIN!"
                 player.score += 5000
+            if currentRoom.unlocksRoom:
+                rm.getRoomByName(currentRoom.roomUnlocks).unlockAll()
+                messageLog = currentRoom.roomUnlocksDesc.replace('\\n','\n') + "\n"
             currentRoom.visited = True
         
         playerStatsMessage = ("Score: {}    Money: ${:.2f}").format(player.score,player.money) 
@@ -152,7 +144,7 @@ def main():
                 currentTile = get_tile_after_move(player.x, player.y + 1)
                 player.x, player.y = move_player(player.x, player.y + 1, previousTile)
             else:
-                print("Commands: QUIT to quit, MAP to open map")
+                print("Commands: QUIT to quit, MAP to open map, ENTER to continue")
                 inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
                 if inputCmd == 'QUIT':
                     break
@@ -164,7 +156,7 @@ def main():
                     elif second_user_input.lower() == "boston common":
                         print(Map.boston_common_description)
                     elif second_user_input.lower() == "library":
-                        print(Map.boston_public_library_description)
+                        print(Map.library_description)
                     elif second_user_input.lower() == "faneuil hall":
                         print(Map.faneuil_hall_description)
                     elif second_user_input.lower() == "mfa":
