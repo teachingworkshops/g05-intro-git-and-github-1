@@ -1,9 +1,10 @@
+import sys,os
 class Room:
     #CONSTRUCTOR
     def __init__(self, title, description):
         self.title = title
         self.description = description
-        self.north = None #type String, this is a 
+        self.north = None #type String 
         self.east = None
         self.south = None
         self.west = None
@@ -59,13 +60,28 @@ def getRoomByName (id):
 def getRoomList():
     return roomList
 
+#SOURCE: Answer by James at https://stackoverflow.com/questions/51060894/adding-a-data-file-in-pyinstaller-using-the-onefile-option
+def resource_path(relative_path):
+    try:
+        #PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        #else if running on terminal
+        base_path = os.path.abspath(".") #. represents current directory
+
+    return os.path.join(base_path, relative_path)
+
+dataPath = resource_path('data.txt')
+
+backgroundDataPath = resource_path('background_data.txt')
+
 #initialize rooms
 roomList = []
 
 #dictionary to return a room obj, given its name
 roomDict = {}
 
-dataFile = open('data.txt','r') #read mode
+dataFile = open(dataPath,'r') #read mode
 line = next(dataFile).strip() #datafile is an iter
 #initialize rooms
 while line != 'ENDDATA':
@@ -123,7 +139,7 @@ for r in roomList:
         r.setWest(roomDict[r.west])
 
 #initialize background data
-dataFile = open('background_data.txt','r') #read mode
+dataFile = open(backgroundDataPath,'r') #read mode
 line = next(dataFile).strip() #datafile is an iter
 #initialize rooms
 while line != 'ENDDATA':
