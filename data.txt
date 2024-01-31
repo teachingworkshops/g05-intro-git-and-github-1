@@ -1,16 +1,88 @@
 [
 STARTINGPOINT
 DESC:you start\nin this\nroom.
-N:RUGGLES E:NONE S:NONE W:NONE
+N:NONE E:BOSTONCOMMON S:NONE W:NONE
+
+]
+
+[
+BOSTONCOMMON
+DESC:welcome to boston common
+N:RUGGLES E:FANUEILHALL S:MFA W:STARTINGPOINT
+
+BLOCKED:EAST
+
+]
+
+[
+FANUEILHALL
+DESC:fanny hall
+N:ONTRAIN E:HOME S:FENWAY W:BOSTONCOMMON
+
+BLOCKED:WEST
+]
+
+[
+MFA
+DESC:museum fine arts. 
+N:BOSTONCOMMON E:NONE S:MIKESPASTRIES W:NONE
 
 ]
 
 [
 RUGGLES
 DESC:welcome to ruggles station\nyou see a giant painted mural.
-N:NONE E:NONE S:STARTINGPOINT W:NONE
+N:NONE E:ONTRAIN S:BOSTONCOMMON W:NONE
 
 HASMONEY:2.69
+]
+
+[
+MIKESPASTRIES
+DESC:mikes pastries, your mouth waters
+N:MFA E:NONE S:NONE W:NONE
+
+]
+
+[
+ONTRAIN
+DESC:you are on the orange line train, decide your destination
+N:NONE E:HARVARD S:FANUEILHALL W:RUGGLES
+
+]
+
+[
+HOME
+DESC:you finally made it home
+N:LIBRARY E:NONE S:AQUARIUM W:FANUEILHALL
+
+]
+
+[
+LIBRARY
+DESC:library
+N:HARVARD E:NONE S:HOME W:NONE
+
+]
+[
+HARVARD
+DESC:harvard
+N:NONE E:NONE S:LIBRARY W:ONTRAIN
+
+]
+
+[
+FENWAY
+DESC:fenway park
+N:FANUEILHALL E:AQUARIUM S:NONE W:NONE
+
+]
+[
+AQUARIUM
+DESC:aquarium
+N:HOME E:NONE S:NONE W:FENWAY
+
+HASMONEY:4.75
 ]
 
 ENDDATA

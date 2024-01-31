@@ -20,6 +20,24 @@ class Room:
 
         self.hasItem = False
         self.itemID = "" #type string
+
+        #default background
+        self.background = [
+        "###############               ###############",
+        "#                                           #",
+        "#                                           #",
+        "#                                           #",
+        "#                                           #",
+        "                                             ",
+        "                                             ",
+        "                                             ",
+        "                                             ",
+        "#                                           #",
+        "#                                           #",
+        "#                                           #",
+        "#                                           #",
+        "###############               ###############"
+    ]
     #TO STRING
     def __str__(self):
         return self.title
@@ -32,6 +50,8 @@ class Room:
         self.east = room
     def setWest(self, room):
         self.west = room
+    def getBackground(self):
+        return self.background 
 #end Room class    
 
 #initialize rooms
@@ -97,8 +117,25 @@ for r in roomList:
     if r.west != 'NONE':
         r.setWest(roomDict[r.west])
 
+#initialize background data
+dataFile = open('background_data.txt','r') #read mode
+line = next(dataFile).strip() #datafile is an iter
+#initialize rooms
+while line != 'ENDDATA':
+    if line == '[': #Detected a new room to be created
+        title = next(dataFile).strip()
+        #build the background by reading lines
+        builtBackground = []
+        line = next(dataFile).rstrip('\n')
+        while line != ']':
+            builtBackground.append(line)
+            line = next(dataFile).rstrip('\n')
+        roomDict[title].background = builtBackground
+    line = next(dataFile).rstrip('\n')
+    
 def getRoomByName (id):
     return roomDict[id]
 
 def getRoomList():
     return roomList
+
