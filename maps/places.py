@@ -46,20 +46,11 @@ class Places(Enum):
     NEW_ENGLAND_AQUARIUM = place_object(4,4, Map.new_england_aquarium)
     
 
-
-    
-
-    
-    
-   
-    
-
-class find_backround:
-    def find_backround(x,y):
-        for place in Places:
-            if place.value.x == x and place.value.y == y:
-                return place.value.background
-        return None
+def find_background(x,y):
+    for place in Places:
+        if place.value.x == x and place.value.y == y:
+            return place.value.background
+    return None
 
 
 
