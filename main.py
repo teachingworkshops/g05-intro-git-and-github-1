@@ -103,7 +103,7 @@ while inputCmd != 'QUIT':
         player_y = 1
     elif entry_point == "bottom":
         player_x = screen_width // 2
-        player_y = screen_height - 1
+        player_y = screen_height - 2
     else:
         player_x = screen_width // 2
         player_y = screen_height // 2
