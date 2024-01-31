@@ -1,8 +1,21 @@
 # HOMEWARD BOUND: A BOSTON ADVENTURE
+<p align="center">
+        ⣀⣠⡶⠶⠞⠛⠛⠛⠳⠶⠶⣄⣀        <br />
+    ⢀⣴⠟⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⠻⣦     <br />
+   ⣰⠟⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠻⣦   <br />
+ ⣼⠃⠄⢰⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⡆⠄⠘⢧  <br />
+⢸⡇⠄⠄⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⢸⡇<br />
+⣾⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿<br />
+⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿<br />
+⢸⡇⠄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⢰⡇<br />
+⠈⢳⡄⠄⠄⠄⠄⠄⠄⠄⢸⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⢠⡾⠁<br />
+   ⠻⣦⠄⠄⠄⠄⠄⠄⠸⠿⠿⠿⠇⠄⠄⠄⠄⠄⠄⣰⡟   <br />
+    ⠈⠳⣦⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣤⠞⠃    <br />
+       ⠈⠉⠻⠶⠦⣤⣤⣤⣤⣤⠶⠶⠞⠉⠁       <br /><br />
+Homeward Bound is a text-based adventure game where you can explore various landmarks in Boston.
+</p>
 
-Boston Adventure is a text-based adventure game where you can explore various landmarks in Boston.
-
-## Getting Started
+### Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
