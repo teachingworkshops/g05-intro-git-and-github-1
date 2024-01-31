@@ -53,6 +53,11 @@ class Room:
     def getBackground(self):
         return self.background 
 #end Room class    
+def getRoomByName (id):
+    return roomDict[id]
+
+def getRoomList():
+    return roomList
 
 #initialize rooms
 roomList = []
@@ -132,10 +137,6 @@ while line != 'ENDDATA':
             line = next(dataFile).rstrip('\n')
         roomDict[title].background = builtBackground
     line = next(dataFile).rstrip('\n')
-    
-def getRoomByName (id):
-    return roomDict[id]
 
-def getRoomList():
-    return roomList
+    
 

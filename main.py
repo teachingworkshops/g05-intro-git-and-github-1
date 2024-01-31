@@ -23,28 +23,36 @@ def draw_game(x,y):
 
     print(Fore.YELLOW + Style.BRIGHT + "North: {0}, East: {1}, South: {2}, West: {3}".format(str(currentRoom.north) + (' (blocked)' if currentRoom.northBlocked else ''),str(currentRoom.east) + (' (blocked)' if currentRoom.eastBlocked else ''),str(currentRoom.south) + (' (blocked)' if currentRoom.southBlocked else ''),str(currentRoom.west) + (' (blocked)' if currentRoom.westBlocked else '')))
 
+    print(Fore.WHITE)
     
     for row in background:
         print(row)
 
-def clear_previous_position():
+def clear_previous_position(tile): #replace previous position with the tile the player was on
     updated_row = list(background[player_y])
-    updated_row[player_x] = " "
+    updated_row[player_x] = tile
     background[player_y] = "".join(updated_row)
 
 def is_valid_move(x, y):
     # Check if x and y are within the valid range
     if 0 <= y < len(background) and 0 <= x < len(background[y]):
-        return background[y][x] == " "
+        return background[y][x] != "#" #return true if the tile is an open space and not a wall (denoted by # symbol)
     else:
         return False
 
-def move_player(x, y):
+def move_player(x, y, tile): #tile is a variable to remember the tile that the player moved from
     if is_valid_move(x, y):
-        clear_previous_position()
+        clear_previous_position(tile)
         background[y] = background[y][:x] + "@" + background[y][x + 1:]
         return x, y
     return player_x, player_y
+
+#gets the tile player lands on after moving
+def get_tile_after_move(x,y):
+    if is_valid_move(x, y):
+        return background[y][x]
+    #else
+    return currentTile
 
 #TITLE
 Scenes().title_page()
@@ -54,10 +62,6 @@ input("Press Enter to start the game...")
 #INITIALIZATION
 entry_point = ""
 
-#was player able to move between rooms?
-movedBetweenRooms = False
-
-
 currentRoom = rm.getRoomByName('STARTINGPOINT')
 currentRoom.visited = True
 
@@ -65,9 +69,13 @@ background = currentRoom.background
 screen_width = len(background[0])
 screen_height = len(background)
 
+currentTile = ' '
+
 player_x = screen_width // 2
 player_y = screen_height // 2
-move_player(player_x,player_y)
+move_player(player_x,player_y,' ')
+
+
 
 inputCmd = ''
 #GAME LOOP
@@ -89,14 +97,12 @@ while inputCmd != 'QUIT':
         if currentRoom.title == 'HOME':
             messageLog = "YOU WIN!"
         currentRoom.visited = True
-        
-
      
     if entry_point == "left":
         player_x = 1
         player_y = screen_height // 2
     elif entry_point == "right":
-        player_x = screen_width - 1
+        player_x = screen_width - 2
         player_y = screen_height // 2
     elif entry_point == "top":
         player_x = screen_width // 2
@@ -108,20 +114,27 @@ while inputCmd != 'QUIT':
         player_x = screen_width // 2
         player_y = screen_height // 2
     
-    player_x,player_y = move_player(player_x,player_y) #update player pos
+    player_x,player_y = move_player(player_x,player_y,currentTile) #update player pos
     #inner loop
     while True:
         draw_game(player_x,player_y)
         ch = getch()
 
-        if ch == b'a':
-            player_x, player_y = move_player(player_x - 1, player_y)
+        #remember this tile
+        previousTile = currentTile
+        if ch == b'a':         
+            #update the tile
+            currentTile = get_tile_after_move(player_x - 1, player_y)
+            player_x, player_y = move_player(player_x - 1, player_y, previousTile)
         elif ch == b'd':
-            player_x, player_y = move_player(player_x + 1, player_y)
+            currentTile = get_tile_after_move(player_x + 1, player_y)
+            player_x, player_y = move_player(player_x + 1, player_y, previousTile)
         elif ch == b'w':
-            player_x, player_y = move_player(player_x, player_y - 1)
+            currentTile = get_tile_after_move(player_x, player_y - 1)
+            player_x, player_y = move_player(player_x, player_y - 1, previousTile)
         elif ch == b's':
-            player_x, player_y = move_player(player_x, player_y + 1)
+            currentTile = get_tile_after_move(player_x, player_y + 1)
+            player_x, player_y = move_player(player_x, player_y + 1, previousTile)
         else:
             print("Commands: QUIT to quit, MAP to open map")
             inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
@@ -152,64 +165,49 @@ while inputCmd != 'QUIT':
                     pass
                 input("Press Enter to continue...")
             clear_screen()
-            continue
-
-        
+            continue  
         if player_x == 0: #x position relative to what's on the screen
             #WEST
             if currentRoom.westBlocked or currentRoom.west == 'NONE':
                 messageLog=("You can't go west!")
-                player_x, player_y = move_player(player_x + 1, player_y)
+                player_x, player_y = move_player(player_x + 1, player_y,previousTile)
             else:
                 entry_point = "right"
-                clear_previous_position()
+                clear_previous_position(previousTile)
                 currentRoom = currentRoom.west
                 break
         elif player_x == screen_width - 1:
             #EAsT
             if currentRoom.eastBlocked or currentRoom.east == 'NONE':
                 messageLog=("You can't go east!")
-                player_x, player_y = move_player(player_x - 1, player_y)
+                player_x, player_y = move_player(player_x - 1, player_y,previousTile)
             else:
                 entry_point = "left"
-                clear_previous_position()
+                clear_previous_position(previousTile)
                 currentRoom = currentRoom.east
                 break
         elif player_y == 0:
             #NORTH
             if currentRoom.northBlocked or currentRoom.north == 'NONE':
                 messageLog=("You can't go north!")
-                player_x, player_y = move_player(player_x, player_y + 1)
+                player_x, player_y = move_player(player_x, player_y + 1,previousTile)
             else:
                 entry_point = "bottom"
-                clear_previous_position()
+                clear_previous_position(previousTile)
                 currentRoom = currentRoom.north
                 break
         elif player_y == screen_height - 1:
             #SOUTH
             if currentRoom.southBlocked or currentRoom.south == 'NONE':
                 messageLog=("You can't go south")
-                player_x, player_y = move_player(player_x, player_y - 1)
+                player_x, player_y = move_player(player_x, player_y - 1,previousTile)
             else:
                 entry_point = "top"
-                clear_previous_position()
+                clear_previous_position(previousTile)
                 currentRoom = currentRoom.south
                 break
         
-
-    
-
-
-# play_game(Map.ruggles_background, (2,2))
-
-
-
-
-
-
-##############################################################################
-
-
+        
 #after quit
 print ("goodbye.")
 
