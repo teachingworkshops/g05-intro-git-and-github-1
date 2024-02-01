@@ -21,7 +21,7 @@ Adam Sam, Noah Buteau, Cordell Givens, Justin Smith
 
 ### Goal of Game
 
-Within the game your goal is to get the highest score possible. How will get these points I guess you'll have to play and see! 
+Within the game your goal is to get the highest score possible. How will you earn these points? I guess you'll have to play and see! 
 A puzzle mechanic is implemented and you'll have to solve in order to finish the level! Once you've made it back to your house view your score at the top of the screen and re play as many times as you want to get the highest score possible!
 
 ### Prerequisites
