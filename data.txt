@@ -7,7 +7,7 @@ N:NONE E:BOSTONCOMMON S:NONE W:NONE
 
 [
 BOSTONCOMMON
-DESC:Welcome to Boston Common.
+DESC:Welcome to Boston Common. A flock of geese strut by confidently, they know that they are the ones who really run this city.
 N:RUGGLES E:FANUEILHALL S:MFA W:STARTINGPOINT
 
 BLOCKED:EAST
@@ -16,7 +16,7 @@ BLOCKED:EAST
 
 [
 FANUEILHALL
-DESC:Welcome to Fanny Hall!
+DESC:Welcome to Fanny Hall! You see the statue of Sam Adams and pay your respects. 
 N:ONTRAIN E:HOME S:FENWAY W:BOSTONCOMMON
 
 BLOCKED:WEST
@@ -24,7 +24,7 @@ BLOCKED:WEST
 
 [
 MFA
-DESC:Welcome to Museum of Fine Arts. 
+DESC:Welcome to Museum of Fine Arts. \nYou stare at the art pieces and feel compelled to ponder the enigmatic dialogue between the ineffable and the tangible.
 N:BOSTONCOMMON E:NONE S:MIKESPASTRIES W:NONE
 
 ]
