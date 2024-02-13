@@ -1,11 +1,14 @@
 import room_manager as rm #room module room.py containing Room class
 import player_manager as pm
 import os
+import os.path
 import sys,time
 import msvcrt
 from scenes import Scenes
 from maps.map_structure import Map
 from colorama import Fore, Style #library containing colored
+
+highScore = 0
 
 def getch():
     return msvcrt.getch()
@@ -89,7 +92,7 @@ def main():
         #apply current room attributes
         if not currentRoom.visited:
             #add score for each unique room visited
-            player.score += 100
+            player.score += 100 
             #check attributes / events of the room if not yet visited
             if (currentRoom.hasMoney):
                 messageLog = "You found $" + currentRoom.moneyAmount + " on the floor!"
@@ -99,6 +102,35 @@ def main():
             if currentRoom.title == 'HOME':
                 messageLog = "YOU WIN!"
                 player.score += 5000
+
+                path = './scores.txt' #file with high scores path
+                #if the file exists
+                if os.path.isfile(path):
+                    #open the file to read from it. and use readlines to create a list of strings
+                    with open(path, 'r') as scores_file:
+                        existing_scores = scores_file.readlines()
+    
+                #if the list is empty 
+                    if not existing_scores:
+                        #open the file to write to it, and write the player's current score
+                        with open(path, 'w') as scores_file:
+                            scores_file.write(str(player.score))
+                #if the list is not empty   
+                    else:
+                        #always make the high_score the first line of the file aka. element 0 in the existing_scores list
+                        high_score = int(existing_scores[0].strip())
+                        #now if the current score of the player is bigger than the previous high score
+                        if player.score > high_score:
+                            #open the file, now to write to it, write the current score.
+                            with open(path, 'w') as scores_file:
+                                scores_file.write(str(player.score))
+                        else:
+                            pass
+                else:
+                    with open(path, 'w') as scores_file:
+                        scores_file.write(str(player.score))
+
+
             if currentRoom.unlocksRoom:
                 rm.getRoomByName(currentRoom.roomUnlocks).unlockAll()
                 messageLog = currentRoom.roomUnlocksDesc.replace('\\n','\n') + "\n"
