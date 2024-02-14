@@ -9,7 +9,7 @@ from maps.map_structure import Map
 from colorama import Fore, Style #library containing colored
 
 highScore = 0
-
+reset = False
 def getch():
     return msvcrt.getch()
 
@@ -176,10 +176,16 @@ def main():
                 currentTile = get_tile_after_move(player.x, player.y + 1)
                 player.x, player.y = move_player(player.x, player.y + 1, previousTile)
             else:
-                print("Commands: QUIT to quit, MAP to open map, ENTER to continue")
+                print("Commands: QUIT to quit, MAP to open map, ENTER to continue, RESET to reset")
                 inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
                 if inputCmd == 'QUIT':
                     break
+                if inputCmd == 'RESET':
+                    #TODO: make it get rid of the @ from first screen
+                    #TODO make it skip the intro title screen             
+                    reset = True
+                    break
+
                 if inputCmd =='MAP' or inputCmd == 'M':
                     print(Map.map)
                     second_user_input = input("Type place of interest to view the description\nOr press Enter to continue...\n")
@@ -246,9 +252,15 @@ def main():
                     clear_previous_position(previousTile)
                     currentRoom = currentRoom.south
                     break
-            
-    #after quit
-    print ("goodbye.")
+#after reset
+if reset == True:
+    os.system('python main.py')
+    clear_screen()
+
+    reset = False
+
+#after quit
+print ("goodbye.")
 
 if (__name__) == '__main__':
     main() 
