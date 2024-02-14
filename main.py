@@ -255,6 +255,15 @@ def main():
     if won:
         clear_screen()
         Scenes().ending_page()
+
+        print("Enter QUIT to quit or REPLAY to play again")
+        inputCmd = inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
+
+        if inputCmd == 'QUIT':
+            print("Thanks for playing!")
+        elif inputCmd == 'REPLAY':
+            print("Replay")
+
     print ("goodbye.")
 
 if (__name__) == '__main__':
