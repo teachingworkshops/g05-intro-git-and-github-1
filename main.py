@@ -257,7 +257,7 @@ def main():
         Scenes().ending_page()
 
         print("Enter QUIT to quit or REPLAY to play again")
-        inputCmd = inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
+        inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
 
         if inputCmd == 'QUIT':
             print("Thanks for playing!")
