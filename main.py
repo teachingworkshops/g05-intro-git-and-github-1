@@ -256,6 +256,7 @@ def main():
         clear_screen()
         Scenes().ending_page()
 
+        print("Final score: " + str(player.score) +"\n")
         print("Enter QUIT to quit or REPLAY to play again")
         inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
 
