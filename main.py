@@ -80,6 +80,7 @@ def main():
     player.x = screen_width // 2
     player.y = screen_height // 2
     move_player(player.x,player.y,' ')
+    win = False
 
     inputCmd = ''
     #GAME LOOP
