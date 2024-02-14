@@ -80,7 +80,7 @@ def main():
     player.x = screen_width // 2
     player.y = screen_height // 2
     move_player(player.x,player.y,' ')
-    win = False
+    won = False
 
     inputCmd = ''
     #GAME LOOP
@@ -130,6 +130,9 @@ def main():
                 else:
                     with open(path, 'w') as scores_file:
                         scores_file.write(str(player.score))
+                
+                won = True
+                break
 
 
             if currentRoom.unlocksRoom:
@@ -249,6 +252,9 @@ def main():
                     break
             
     #after quit
+    if won:
+        clear_screen()
+        Scenes().ending_page()
     print ("goodbye.")
 
 if (__name__) == '__main__':
