@@ -3,7 +3,7 @@ class Map:
 
     map =   r"""                      MAP OF BOSTON
             [     ][   Ruggles----][--------][----        ][ Harvard]
-            [     ][              ][        ][    |       ][ Library]
+            [     ][   Wentworth  ][        ][    |       ][ Library]
             [Start][Boston Common ][ BLOCKED][Fanueil Hall][  Home  ]
             [     ][   MFA        ][        ][            ][        ]
             [     ][Mikes Pastries][        ][   Fenway   ][Aquarium]
@@ -11,6 +11,7 @@ class Map:
     #I WANT TO CHANGE THESE so its more about the game, saying things like at the mfa you might find something on the floor that could get you on
     #the train or something like that typa deal
     ruggles_description = "Ruggles is a bustling transit station located in Northeastern University."
+    wentworth_description = "Wentworth is a private university in Boston, Massachusetts"
     boston_common_description = "Boston Common is a central public park in downtown Boston."
     library_description = "The Boston Public Library is one of the largest municipal public library systems in the United States."
     faneuil_hall_description = "Faneuil Hall is a marketplace and meeting hall located near the waterfront."
