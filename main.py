@@ -9,7 +9,6 @@ from maps.map_structure import Map
 from colorama import Fore, Style #library containing colored
 
 highScore = 0
-
 def getch():
     return msvcrt.getch()
 
@@ -17,6 +16,14 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
+    reset = False
+
+    #Code for setting up for exe assuming exe is in downloads inside dist folder
+    #downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+    #file_name = "dist\main.exe"
+    #game_path = os.path.join(downloads, file_name)
+
+
     #reload scene after
     def draw_game(x,y):
         clear_screen()
@@ -80,11 +87,11 @@ def main():
     player.x = screen_width // 2
     player.y = screen_height // 2
     move_player(player.x,player.y,' ')
-    win = False
+    won = False
 
     inputCmd = ''
     #GAME LOOP
-    while inputCmd != 'QUIT':
+    while inputCmd != 'QUIT' and inputCmd != 'RESET':
         background = currentRoom.background
         screen_width = len(background[0])
         screen_height = len(background)
@@ -130,6 +137,9 @@ def main():
                 else:
                     with open(path, 'w') as scores_file:
                         scores_file.write(str(player.score))
+                
+                won = True
+                break
 
 
             if currentRoom.unlocksRoom:
@@ -177,10 +187,14 @@ def main():
                 currentTile = get_tile_after_move(player.x, player.y + 1)
                 player.x, player.y = move_player(player.x, player.y + 1, previousTile)
             else:
-                print("Commands: QUIT to quit, MAP to open map, ENTER to continue")
+                print("Commands: QUIT to quit, MAP to open map, ENTER to continue, RESET to reset")
                 inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
                 if inputCmd == 'QUIT':
                     break
+                if inputCmd == 'RESET':           
+                    reset = True
+                    break
+
                 if inputCmd =='MAP' or inputCmd == 'M':
                     print(Map.map)
                     second_user_input = input("Type place of interest to view the description\nOr press Enter to continue...\n")
@@ -249,9 +263,32 @@ def main():
                     clear_previous_position(previousTile)
                     currentRoom = currentRoom.south
                     break
+
             
     #after quit
-    print ("goodbye.")
+    if won:
+        clear_screen()
+        Scenes().ending_page()
+
+        print("Final score: " + str(player.score) +"\n")
+        print("Enter QUIT to quit or REPLAY to play again")
+        inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
+
+        if inputCmd == 'QUIT':
+            print("Thanks for playing!")
+        elif inputCmd == 'REPLAY':
+            reset = True
+
+    #after reset
+    if reset == True:
+        clear_screen()
+        os.system('python main.py')
+
+        #code for exe setup
+        #os.startfile(game_path)
+    else:
+        #after quit
+        print ("goodbye.")
 
 if (__name__) == '__main__':
     main() 
