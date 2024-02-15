@@ -87,7 +87,7 @@ def main():
     player.x = screen_width // 2
     player.y = screen_height // 2
     move_player(player.x,player.y,' ')
-    win = False
+    won = False
 
     inputCmd = ''
     #GAME LOOP
@@ -137,6 +137,9 @@ def main():
                 else:
                     with open(path, 'w') as scores_file:
                         scores_file.write(str(player.score))
+                
+                won = True
+                break
 
 
             if currentRoom.unlocksRoom:
@@ -258,6 +261,22 @@ def main():
                     clear_previous_position(previousTile)
                     currentRoom = currentRoom.south
                     break
+
+            
+    #after quit
+    if won:
+        clear_screen()
+        Scenes().ending_page()
+
+        print("Final score: " + str(player.score) +"\n")
+        print("Enter QUIT to quit or REPLAY to play again")
+        inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
+
+        if inputCmd == 'QUIT':
+            print("Thanks for playing!")
+        elif inputCmd == 'REPLAY':
+            reset = True
+
     #after reset
     if reset == True:
         clear_screen()
