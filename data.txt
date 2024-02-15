@@ -8,9 +8,16 @@ N:NONE E:BOSTONCOMMON S:NONE W:NONE
 [
 BOSTONCOMMON
 DESC:Welcome to Boston Common. A flock of geese strut by confidently, they know that they are the ones who really run this city.
-N:RUGGLES E:FANUEILHALL S:MFA W:STARTINGPOINT
+N:WENTWORTH E:FANUEILHALL S:MFA W:STARTINGPOINT
 
 BLOCKED:EAST
+
+]
+
+[
+WENTWORTH
+DESC:Welcome to Wentworth. Maybe you can skip your software engineering class today. Go somewhere else.
+N:RUGGLES E:NONE S:BOSTONCOMMON W:NONE
 
 ]
 
@@ -32,7 +39,7 @@ N:BOSTONCOMMON E:NONE S:MIKESPASTRIES W:NONE
 [
 RUGGLES
 DESC:Welcome to Ruggles Station! In front of you is a giant painted mural.\nTo the east you may board the train if you have a Charlie Card. Unfortunately the ticket machines are all busted.
-N:NONE E:ONTRAIN S:BOSTONCOMMON W:NONE
+N:NONE E:ONTRAIN S:WENTWORTH W:NONE
 
 BLOCKED:EAST
 HASMONEY:2.69
