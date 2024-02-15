@@ -9,7 +9,6 @@ from maps.map_structure import Map
 from colorama import Fore, Style #library containing colored
 
 highScore = 0
-reset = False
 def getch():
     return msvcrt.getch()
 
@@ -17,6 +16,14 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
+    reset = False
+
+    #Code for setting up for exe assuming exe is in downloads inside dist folder
+    #downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+    #file_name = "dist\main.exe"
+    #game_path = os.path.join(downloads, file_name)
+
+
     #reload scene after
     def draw_game(x,y):
         clear_screen()
@@ -83,7 +90,7 @@ def main():
 
     inputCmd = ''
     #GAME LOOP
-    while inputCmd != 'QUIT':
+    while inputCmd != 'QUIT' and inputCmd != 'RESET':
         background = currentRoom.background
         screen_width = len(background[0])
         screen_height = len(background)
@@ -180,9 +187,7 @@ def main():
                 inputCmd = input(Fore.RESET + Style.RESET_ALL + '>').upper()
                 if inputCmd == 'QUIT':
                     break
-                if inputCmd == 'RESET':
-                    #TODO: make it get rid of the @ from first screen
-                    #TODO make it skip the intro title screen             
+                if inputCmd == 'RESET':           
                     reset = True
                     break
 
@@ -252,15 +257,16 @@ def main():
                     clear_previous_position(previousTile)
                     currentRoom = currentRoom.south
                     break
-#after reset
-if reset == True:
-    os.system('python main.py')
-    clear_screen()
+    #after reset
+    if reset == True:
+        clear_screen()
+        os.system('python main.py')
 
-    reset = False
-
-#after quit
-print ("goodbye.")
+        #code for exe setup
+        #os.startfile(game_path)
+    else:
+        #after quit
+        print ("goodbye.")
 
 if (__name__) == '__main__':
     main() 
