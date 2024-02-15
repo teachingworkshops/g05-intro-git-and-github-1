@@ -200,6 +200,8 @@ def main():
                     second_user_input = input("Type place of interest to view the description\nOr press Enter to continue...\n")
                     if second_user_input.lower() == "ruggles":
                         print(Map.ruggles_description)
+                    elif second_user_input.lower() == "wentworth":
+                        print(Map.harvard_description)
                     elif second_user_input.lower() == "boston common":
                         print(Map.boston_common_description)
                     elif second_user_input.lower() == "library":
