@@ -153,7 +153,7 @@ for r in roomList:
         r.setWest(roomDict[r.west])
 
 #initialize background data
-dataFile = open(backgroundDataPath,'r') #read mode
+dataFile = open(backgroundDataPath,'r', encoding='utf-8') #read mode
 line = next(dataFile).strip() #datafile is an iter
 #initialize rooms
 while line != 'ENDDATA':
